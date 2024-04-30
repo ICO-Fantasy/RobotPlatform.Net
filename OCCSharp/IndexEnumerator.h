@@ -4,75 +4,75 @@ using namespace System::Collections::Generic;
 
 namespace RDC
 {
-namespace OCC
-{
-template <typename T>
-public interface class IIndexEnumerable : IEnumerable<T> {
-	T Value(int theIndex);
-};
-
-//--------------------------------------------------------------------------------------------------
-
-template <typename T>
-public ref class IndexEnumerator : IEnumerator<T> {
-public:
-	IndexEnumerator(IIndexEnumerable<T>^ enumerable, int lower, int upper) {
-		_Enumerable = enumerable;
-		_CurrentIndex = lower - 1;
-		_UpperIndex = upper;
-	}
-
-	//--------------------------------------------------------------------------------------------------
-
-	~IndexEnumerator() {
-	}
-
-	//--------------------------------------------------------------------------------------------------
-
-	virtual bool MoveNext() = IEnumerator<T>::MoveNext
+	namespace OCC
 	{
-		if (_CurrentIndex < _UpperIndex)
-		{
-			_CurrentIndex++;
-			return true;
-		}
-		return false;
-	}
+		template <typename T>
+		public interface class IIndexEnumerable : IEnumerable<T> {
+			T Value(int theIndex);
+		};
 
 		//--------------------------------------------------------------------------------------------------
 
-		virtual void Reset() = IEnumerator<T>::Reset
-	{
-		throw gcnew System::NotImplementedException();
-	}
+		template <typename T>
+		public ref class IndexEnumerator : IEnumerator<T> {
+		public:
+			IndexEnumerator(IIndexEnumerable<T>^ enumerable, int lower, int upper) {
+				_Enumerable = enumerable;
+				_CurrentIndex = lower - 1;
+				_UpperIndex = upper;
+			}
 
-		//--------------------------------------------------------------------------------------------------
+			//--------------------------------------------------------------------------------------------------
 
-		property T Current
-	{
-		virtual T get() = IEnumerator<T>::Current::get
-		{
-			return _Enumerable->Value(_CurrentIndex);
-		}
-	};
+			~IndexEnumerator() {
+			}
 
-	//--------------------------------------------------------------------------------------------------
+			//--------------------------------------------------------------------------------------------------
 
-	property System::Object^ Current2
-	{
-		virtual System::Object^ get() = System::Collections::IEnumerator::Current::get
-		{
-			return _Enumerable->Value(_CurrentIndex);
-		}
-	};
+			virtual bool MoveNext() = IEnumerator<T>::MoveNext
+			{
+				if (_CurrentIndex < _UpperIndex)
+				{
+					_CurrentIndex++;
+					return true;
+				}
+				return false;
+			}
 
-	//--------------------------------------------------------------------------------------------------
+				//--------------------------------------------------------------------------------------------------
 
-private:
-	IIndexEnumerable<T>^ _Enumerable;
-	int _CurrentIndex;
-	int _UpperIndex;
-};
+				virtual void Reset() = IEnumerator<T>::Reset
+			{
+				throw gcnew System::NotImplementedException();
+			}
 
-}; // Occt
+				//--------------------------------------------------------------------------------------------------
+
+				property T Current
+			{
+				virtual T get() = IEnumerator<T>::Current::get
+				{
+					return _Enumerable->Value(_CurrentIndex);
+				}
+			};
+
+			//--------------------------------------------------------------------------------------------------
+
+			property System::Object^ Current2
+			{
+				virtual System::Object^ get() = System::Collections::IEnumerator::Current::get
+				{
+					return _Enumerable->Value(_CurrentIndex);
+				}
+			};
+
+			//--------------------------------------------------------------------------------------------------
+
+		private:
+			IIndexEnumerable<T>^ _Enumerable;
+			int _CurrentIndex;
+			int _UpperIndex;
+		};
+
+	}; // Occt
 }; // RDC

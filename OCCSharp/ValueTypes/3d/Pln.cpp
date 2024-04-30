@@ -78,7 +78,7 @@ double Pln::Distance(Pnt P)
 	return this_ptr->Distance(*P_ptr);
 }
 
-double Pln::Distance(Macad::Occt::gp_Lin^ L)
+double Pln::Distance(RDC::OCC::gp_Lin^ L)
 {
 	STRUCT_PINREF(this, Pln, gp_Pln);
 	return this_ptr->Distance((*(::gp_Lin*)L->NativeInstance));
@@ -98,7 +98,7 @@ double Pln::SquareDistance(Pnt P)
 	return this_ptr->SquareDistance(*P_ptr);
 }
 
-double Pln::SquareDistance(Macad::Occt::gp_Lin^ L)
+double Pln::SquareDistance(RDC::OCC::gp_Lin^ L)
 {
 	STRUCT_PINREF(this, Pln, gp_Pln);
 	return this_ptr->SquareDistance((*(::gp_Lin*)L->NativeInstance));
@@ -119,7 +119,7 @@ bool Pln::Contains(Pnt P, double LinearTolerance)
 	return this_ptr->Contains(*P_ptr, LinearTolerance);
 }
 
-bool Pln::Contains(Macad::Occt::gp_Lin^ L, double LinearTolerance, double AngularTolerance)
+bool Pln::Contains(RDC::OCC::gp_Lin^ L, double LinearTolerance, double AngularTolerance)
 {
 	STRUCT_PINREF(this, Pln, gp_Pln);
 	return this_ptr->Contains((*(::gp_Lin*)L->NativeInstance), LinearTolerance, AngularTolerance);

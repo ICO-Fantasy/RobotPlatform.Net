@@ -16,7 +16,7 @@
 #error Incorrect OCCT library version.
 #endif
 
-// Native includes
+// 原始包含
 
 #include "Standard_TypeDef.hxx"
 #include "gp.hxx"
@@ -29,10 +29,11 @@
 #define _Aspect_FBConfig_HeaderFile
 typedef void* Aspect_FBConfig;
 
+//前向声明和原始包含
 #include "Generated/ForwardDeclarations.h"
 #include "Generated/NativeIncludes.h"
 
-// Managed includes
+// 引入模板类
 
 #include "BaseClass.h"
 #include "IndexEnumerator.h"

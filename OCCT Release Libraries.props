@@ -2,16 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <OCC_IncludePath>D:\OCC\7.7.0\opencascade-7.7.0-install\inc</OCC_IncludePath>
-    <OCC_IncludeTKRelease>
-    </OCC_IncludeTKRelease>
-    <OCC_LibTKRelease>
-    </OCC_LibTKRelease>
-    <OCC_LibTKReleaseWithDebugInfo>
-    </OCC_LibTKReleaseWithDebugInfo>
-    <OCC_IncludeTKReleaseWithDebugInfo>
-    </OCC_IncludeTKReleaseWithDebugInfo>
-    <OCC_3rd_Freeimage_IncludePath>D:\OCC\7.7.0\third-part\freeimage-3.17.0-vc14-64\bin</OCC_3rd_Freeimage_IncludePath>
+    <OCC_IncludePath>D:\OCC\7.8.0\occt-7.8.0-install\inc</OCC_IncludePath>
+    <OCC_IncludeTKRelease />
+    <OCC_LibTKRelease />
+    <OCC_IncludeTKReleaseWithInfo />
+    <OCC_LibTKReleaseWithInfo />
+    <OCC_3rd_Freeimage_IncludePath>D:\OCC\7.8.0\occt-7.8.0-install\win64\vc143\bin</OCC_3rd_Freeimage_IncludePath>
   </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>OCCT Release Libraries</_PropertySheetDisplayName>
@@ -26,13 +22,12 @@
     </BuildMacro>
     <BuildMacro Include="OCC_LibTKRelease">
       <Value>$(OCC_LibTKRelease)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="OCC_LibTKReleaseWithDebugInfo">
-      <Value>$(OCC_LibTKReleaseWithDebugInfo)</Value>
+    <BuildMacro Include="OCC_IncludeTKReleaseWithInfo">
+      <Value>$(OCC_IncludeTKReleaseWithInfo)</Value>
     </BuildMacro>
-    <BuildMacro Include="OCC_IncludeTKReleaseWithDebugInfo">
-      <Value>$(OCC_IncludeTKReleaseWithDebugInfo)</Value>
+    <BuildMacro Include="OCC_LibTKReleaseWithInfo">
+      <Value>$(OCC_LibTKReleaseWithInfo)</Value>
     </BuildMacro>
     <BuildMacro Include="OCC_3rd_Freeimage_IncludePath">
       <Value>$(OCC_3rd_Freeimage_IncludePath)</Value>

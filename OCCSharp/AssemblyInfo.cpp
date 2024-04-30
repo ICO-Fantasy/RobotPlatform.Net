@@ -1,4 +1,7 @@
-﻿using namespace System;
+﻿#pragma once
+#include <OcctPCH.h>
+
+using namespace System;
 using namespace System::Reflection;
 using namespace System::Runtime::CompilerServices;
 using namespace System::Runtime::InteropServices;
