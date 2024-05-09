@@ -56,7 +56,7 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     /// <summary>
     /// 自动重绘的计算器
     /// </summary>
-    //readonly DispatcherTimer _RedrawTimer;
+    readonly DispatcherTimer _RedrawTimer;
 
     //AISX_Grid _Grid;
     XY _LastGridSize = new(200.0, 200.0);
@@ -83,12 +83,12 @@ public sealed class WorkspaceController : BaseObject, IDisposable
         //VisualParameterSet.ParameterChanged += _VisualParameterSet_ParameterChanged;
 
         //todo 自动重绘
-        //_RedrawTimer = new DispatcherTimer(DispatcherPriority.Render)
-        //{
-        //    Interval = TimeSpan.FromSeconds(1.0 / 60.0)
-        //};
-        //_RedrawTimer.Tick += _RedrawTimer_Tick;
-        //_RedrawTimer.Start();
+        _RedrawTimer = new DispatcherTimer(DispatcherPriority.Render)
+        {
+            Interval = TimeSpan.FromSeconds(1.0 / 60.0)
+        };
+        _RedrawTimer.Tick += _RedrawTimer_Tick;
+        _RedrawTimer.Start();
 
         InitWorkspace();
     }
@@ -116,8 +116,8 @@ public sealed class WorkspaceController : BaseObject, IDisposable
         //_CurrentEditor = null;
         //_Grid = null;
 
-        //_RedrawTimer.Stop();
-        //_RedrawTimer.Tick -= _RedrawTimer_Tick;
+        _RedrawTimer.Stop();
+        _RedrawTimer.Tick -= _RedrawTimer_Tick;
 
         //VisualParameterSet.ParameterChanged -= _VisualParameterSet_ParameterChanged;
 
@@ -965,10 +965,10 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    //void _RedrawTimer_Tick(object sender, EventArgs e)
-    //{
-    //    _Redraw();
-    //}
+    void _RedrawTimer_Tick(object sender, EventArgs e)
+    {
+        _Redraw();
+    }
 
     #endregion
 
