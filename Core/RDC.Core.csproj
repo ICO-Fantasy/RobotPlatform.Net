@@ -1,14 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
+    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\RDC.Common.csproj" />
     <ProjectReference Include="..\OCCSharp\OCCSharp.vcxproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Singleton\" />
   </ItemGroup>
 
 </Project>

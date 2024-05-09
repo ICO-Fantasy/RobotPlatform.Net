@@ -900,6 +900,24 @@ namespace RDC
 		}; // enum  class Graphic3d_TextureSetBits
 
 		//---------------------------------------------------------------------
+		//  Enum  Graphic3d_ZLayerId
+		//---------------------------------------------------------------------
+		//！人工添加
+		/// <summary>
+		/// 预定义图层的枚举，这些图层不能删除
+		/// </summary>
+		public enum class Graphic3d_ZLayerId
+		{
+			Graphic3d_ZLayerId_UNKNOWN = -1, //!< 无效 ZLayer 的标识符
+			Graphic3d_ZLayerId_Default = 0, //!< 主演示文稿的默认 Z 层
+			Graphic3d_ZLayerId_Top = -2, //!< 用于 3D 演示的覆盖层，它继承了前一个 ZLayer 的深度
+			Graphic3d_ZLayerId_Topmost = -3, //!< 用于具有独立深度的 3D 演示的覆盖层
+			Graphic3d_ZLayerId_TopOSD = -4, //!< 用于 2D 演示的覆盖层（屏幕显示）
+			Graphic3d_ZLayerId_BotOSD = -5  //!< 用于 2D 演示的底层（屏幕显示）
+		}; // enum  class Graphic3d_ZLayerId
+
+
+		//---------------------------------------------------------------------
 		//  Class  Graphic3d_Vec2
 		//---------------------------------------------------------------------
 		public ref class Graphic3d_Vec2 sealed

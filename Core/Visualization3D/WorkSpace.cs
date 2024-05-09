@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+
 using RDC.Common;
 using RDC.Common.Serialization;
 using RDC.OCC;
@@ -11,23 +12,36 @@ namespace RDC.Core.Visualization3D;
 public sealed class Workspace : BaseObject, IDisposable
 {
     #region 属性
+
     /// <summary>
-    /// 画布
+    /// 视口
     /// </summary>
+    /// <remarks>View渲染的实际窗口</remarks>
     [SerializeMember]
     public List<Viewport> Viewports { get; private set; }
 
     /// <summary>
     /// 视图
     /// </summary>
-    public V3d_Viewer? V3dViewer { get; private set; }
+    public V3d_Viewer V3dViewer { get; private set; }
 
     /// <summary>
     /// 交互对象管理器
     /// </summary>
-    public AIS_InteractiveContext? AISContext { get; private set; }
+    public AIS_InteractiveContext AISContext { get; private set; }
+
+    /// <summary>
+    /// 无效化
+    /// </summary>
+    public bool NeedsImmediateRedraw { get; set; }
+
+    /// <summary>
+    /// 重绘
+    /// </summary>
+    public bool NeedsRedraw { get; set; }
 
     #endregion
+
     /// <summary>
     /// <remark>初始化时只创建容器，不初始化视图和管理器</remark>
     /// </summary>

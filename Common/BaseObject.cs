@@ -42,14 +42,12 @@ public class BaseObject : INotifyPropertyChanged, ISerializable
     /// <summary>
     /// 在撤销操作之前调用的方法。
     /// </summary>
-    public virtual void OnBeforeUndo()
-    { }
+    public virtual void OnBeforeUndo() { }
 
     /// <summary>
     /// 在撤销操作之后调用的方法。
     /// </summary>
-    public virtual void OnAfterUndo()
-    { }
+    public virtual void OnAfterUndo() { }
 
     #region ISerializable
 
@@ -57,17 +55,13 @@ public class BaseObject : INotifyPropertyChanged, ISerializable
     /// 在序列化开始时调用。
     /// </summary>
     /// <param name="context">序列化上下文。</param>
-    public virtual void OnBeginSerializing(SerializationContext context)
-    {
-    }
+    public virtual void OnBeginSerializing(SerializationContext context) { }
 
     /// <summary>
     /// 在序列化完成时调用。
     /// </summary>
     /// <param name="context">序列化上下文。</param>
-    public virtual void OnSerialized(SerializationContext context)
-    {
-    }
+    public virtual void OnSerialized(SerializationContext context) { }
 
     /// <summary>
     /// 在反序列化开始时调用。

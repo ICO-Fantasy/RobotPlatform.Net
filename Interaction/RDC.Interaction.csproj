@@ -1,22 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>disable</ImplicitUsings>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Common\RDC.Common.csproj" />
+		<ProjectReference Include="..\Core\RDC.Core.csproj" />
+		<ProjectReference Include="..\OCCSharp\OCCSharp.vcxproj" />
+	</ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Common\RDC.Common.csproj" />
-    <ProjectReference Include="..\Core\RDC.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Framework\" />
+		<Folder Include="Workspace\Selection\" />
+		<Folder Include="Singleton\" />
+	</ItemGroup>
 
 </Project>

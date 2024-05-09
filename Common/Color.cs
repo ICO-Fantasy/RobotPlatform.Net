@@ -23,6 +23,7 @@ public struct Color : ISerializeValue, IEquatable<Color>
     /// 范围在[0-1]
     ///</remarks>
     public double Red { get; private set; }
+
     /// <summary>
     /// 绿色通道的强度
     /// </summary>
@@ -30,6 +31,7 @@ public struct Color : ISerializeValue, IEquatable<Color>
     /// 范围在[0-1]
     ///</remarks>
     public double Green { get; private set; }
+
     /// <summary>
     /// 蓝色通道的强度
     /// </summary>
@@ -37,6 +39,7 @@ public struct Color : ISerializeValue, IEquatable<Color>
     /// 范围在[0-1]
     ///</remarks>
     public double Blue { get; private set; }
+
     /// <summary>
     /// 透明度
     /// </summary>
@@ -80,7 +83,6 @@ public struct Color : ISerializeValue, IEquatable<Color>
             Green = int.Parse(s.Substring(i, 2), NumberStyles.HexNumber) / 255.0;
             i += 2;
             Blue = int.Parse(s.Substring(i, 2), NumberStyles.HexNumber) / 255.0;
-
 
             return;
         }
@@ -134,10 +136,11 @@ public struct Color : ISerializeValue, IEquatable<Color>
     {
         unchecked
         {
-            var hashCode = (int)(Red * 255.0)
-                           | ((int)(Green * 255.0) << 8)
-                           | ((int)(Blue * 255.0) << 16)
-                           | ((int)(Alpha * 255.0) << 24);
+            var hashCode =
+                (int)(Red * 255.0)
+                | ((int)(Green * 255.0) << 8)
+                | ((int)(Blue * 255.0) << 16)
+                | ((int)(Alpha * 255.0) << 24);
             return hashCode;
         }
     }
@@ -153,7 +156,10 @@ public struct Color : ISerializeValue, IEquatable<Color>
 
     public static bool operator ==(Color color1, Color color2)
     {
-        return (color1.Red == color2.Red) && (color1.Green == color2.Green) && (color1.Blue == color2.Blue) && (color1.Alpha == color2.Alpha);
+        return (color1.Red == color2.Red)
+            && (color1.Green == color2.Green)
+            && (color1.Blue == color2.Blue)
+            && (color1.Alpha == color2.Alpha);
     }
 
     //--------------------------------------------------------------------------------------------------
@@ -185,13 +191,17 @@ public struct Color : ISerializeValue, IEquatable<Color>
     {
         return new((int)(Red * 255), (int)(Green * 255), (int)(Blue * 255));
     }
+
     /// <summary>
     /// RGBA 颜色
     /// </summary>
     /// <returns></returns>
     public string ToRGBAString()
     {
-        return string.Format(CultureInfo.InvariantCulture, $"[{Red * 255},{Green * 255},{Blue * 255},{Alpha}]");
+        return string.Format(
+            CultureInfo.InvariantCulture,
+            $"[{Red * 255},{Green * 255},{Blue * 255},{Alpha}]"
+        );
     }
 
     /// <summary>
@@ -211,6 +221,7 @@ public struct Color : ISerializeValue, IEquatable<Color>
     {
         return $"#{(int)(Alpha * 255):x2}{(int)(Red * 255):x2}{(int)(Green * 255):x2}{(int)(Blue * 255):x2}";
     }
+
     /// <summary>
     /// 返回 Quantity_Color
     /// </summary>
@@ -238,9 +249,12 @@ public struct Color : ISerializeValue, IEquatable<Color>
     /// <returns></returns>
     public Color Lerp(Color other, double f)
     {
-        return new Color(Red.Lerp(other.Red, f), Green.Lerp(other.Green, f), Blue.Lerp(other.Blue, f));
+        return new Color(
+            Red.Lerp(other.Red, f),
+            Green.Lerp(other.Green, f),
+            Blue.Lerp(other.Blue, f)
+        );
     }
 
     #endregion
-
 }

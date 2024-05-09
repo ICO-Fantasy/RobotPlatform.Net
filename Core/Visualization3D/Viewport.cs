@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+
 using RDC.Common;
 using RDC.Common.Serialization;
 using RDC.OCC;
 
 namespace RDC.Core.Visualization3D;
 
+/// <summary>
+/// 视口容器，它决定了用多大的空间来渲染页面
+/// </summary>
 [SerializeType]
 public sealed class Viewport : BaseObject, IDisposable
 {
@@ -115,14 +119,14 @@ public sealed class Viewport : BaseObject, IDisposable
     }
 
     /// <summary>
-    /// 视图
-    /// </summary>
-    public V3d_Viewer? V3dViewer { get; private set; }
-
-    /// <summary>
     /// 相机
     /// </summary>
     public V3d_View? V3dView { get; private set; }
+
+    /// <summary>
+    /// 工作空间
+    /// </summary>
+    public Workspace Workspace { get; private set; }
 
     /// <summary>
     /// 动画相机
@@ -183,9 +187,15 @@ public sealed class Viewport : BaseObject, IDisposable
     }
 
     #endregion
-    public Viewport()
+    //public Viewport()
+    //{
+    //    _RenderMode = RenderModes.SolidShaded;
+    //}
+
+    public Viewport(Workspace workspace)
     {
         _RenderMode = RenderModes.SolidShaded;
+        Workspace = workspace;
     }
 
     public double DpiScale
@@ -252,7 +262,7 @@ public sealed class Viewport : BaseObject, IDisposable
         if (V3dView != null)
             return;
 
-        V3dView = V3dViewer.CreateView();
+        V3dView = Workspace.V3dViewer.CreateView();
 
         AisAnimationCamera = new AIS_AnimationCamera(
             new TCollection_AsciiString("ViewCamera"),
@@ -260,6 +270,8 @@ public sealed class Viewport : BaseObject, IDisposable
         );
 
         V3dView.SetBgGradientColors(
+            //new Color(1, 0.0, 0.0).ToQuantityColor(),
+            //new Color(0.0, 0.0, 0.0).ToQuantityColor(),
             new Color(0.624, 0.714, 0.804).ToQuantityColor(),
             new Color(0.424f, 0.482f, 0.545f).ToQuantityColor(),
             Aspect_GradientFillMethod.VER,

@@ -1,19 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OCCSharp\OCCSharp.vcxproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="RDC.OCC">
-      <HintPath>..\x64\Debug\RDC.OCC.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\OCCSharp\OCCSharp.vcxproj" />
+	</ItemGroup>
 
 </Project>

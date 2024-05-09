@@ -10,18 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TestWPF
 {
     /// <summary>
-    /// OCCWindow.xaml 的交互逻辑
+    /// ViewPortView.xaml 的交互逻辑
     /// </summary>
-    public partial class OCCWindow : Window
+    public partial class ViewPortView : UserControl
     {
-        public OCCWindow()
+        public ViewPortView()
         {
             InitializeComponent();
+
         }
     }
 }
