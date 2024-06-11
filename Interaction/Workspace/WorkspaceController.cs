@@ -5,12 +5,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-
 using RDC.Common;
 using RDC.Core;
 using RDC.Core.Visualization3D;
 using RDC.OCC;
-
 using VisualParameters = RDC.Interaction.Parameters.GlobalParameters.VisualParameters;
 
 namespace RDC.Interaction;
@@ -45,7 +43,7 @@ public sealed class WorkspaceController : BaseObject, IDisposable
 
     #endregion
 
-    #region Member variables
+    #region 成员变量
 
     //todo 暂时只支持一个视口
     /// <summary>
@@ -58,7 +56,7 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     /// </summary>
     readonly DispatcherTimer _RedrawTimer;
 
-    //AISX_Grid _Grid;
+    //todo AISX_Grid _Grid;
     XY _LastGridSize = new(200.0, 200.0);
     bool _GridNeedsUpdate;
 
@@ -82,10 +80,11 @@ public sealed class WorkspaceController : BaseObject, IDisposable
 
         //VisualParameterSet.ParameterChanged += _VisualParameterSet_ParameterChanged;
 
-        //todo 自动重绘
-        _RedrawTimer = new DispatcherTimer(DispatcherPriority.Render)
+        //# 渲染
+        double Frame = 60.0; // 每秒帧率 FPS
+        _RedrawTimer = new DispatcherTimer(DispatcherPriority.Render) // 在渲染前执行
         {
-            Interval = TimeSpan.FromSeconds(1.0 / 60.0)
+            Interval = TimeSpan.FromSeconds(1.0 / Frame)
         };
         _RedrawTimer.Tick += _RedrawTimer_Tick;
         _RedrawTimer.Start();
@@ -116,6 +115,7 @@ public sealed class WorkspaceController : BaseObject, IDisposable
         //_CurrentEditor = null;
         //_Grid = null;
 
+        // 结束渲染
         _RedrawTimer.Stop();
         _RedrawTimer.Tick -= _RedrawTimer_Tick;
 
@@ -286,8 +286,6 @@ public sealed class WorkspaceController : BaseObject, IDisposable
         return _ViewControllers[viewIndex];
     }
 
-    //--------------------------------------------------------------------------------------------------
-
     public ViewportController GetViewController(Viewport viewport)
     {
         if (viewport == null)
@@ -297,10 +295,8 @@ public sealed class WorkspaceController : BaseObject, IDisposable
         return _ViewControllers.Find(vc => vc.Viewport == viewport);
     }
 
-    //--------------------------------------------------------------------------------------------------
-
     #endregion
-    //todo 不考虑交互
+
     //#region Workspace navigation
 
     //readonly MouseEventData _MouseEventData = new MouseEventData();
@@ -311,11 +307,11 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     //    get { return _IsMouseEventDataValid; }
     //    set
     //    {
-    //        if (_IsMouseEventDataValid != value)
-    //        {
-    //            _IsMouseEventDataValid = value;
-    //            RaisePropertyChanged();
-    //        }
+    //    if (_IsMouseEventDataValid != value)
+    //    {
+    //    _IsMouseEventDataValid = value;
+    //    RaisePropertyChanged();
+    //    }
     //    }
     //}
 
@@ -325,11 +321,11 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     //    get { return _CursorPosition; }
     //    set
     //    {
-    //        if (_CursorPosition != value)
-    //        {
-    //            _CursorPosition = value;
-    //            RaisePropertyChanged();
-    //        }
+    //    if (_CursorPosition != value)
+    //    {
+    //    _CursorPosition = value;
+    //    RaisePropertyChanged();
+    //    }
     //    }
     //}
 
@@ -339,11 +335,11 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     //    get { return _CursorPosition2d; }
     //    set
     //    {
-    //        if (_CursorPosition2d != value)
-    //        {
-    //            _CursorPosition2d = value;
-    //            RaisePropertyChanged();
-    //        }
+    //    if (_CursorPosition2d != value)
+    //    {
+    //    _CursorPosition2d = value;
+    //    RaisePropertyChanged();
+    //    }
     //    }
     //}
 
@@ -362,11 +358,11 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     //    get { return _IsCursorPositionValid; }
     //    set
     //    {
-    //        if (_IsCursorPositionValid != value)
-    //        {
-    //            _IsCursorPositionValid = value;
-    //            RaisePropertyChanged();
-    //        }
+    //    if (_IsCursorPositionValid != value)
+    //    {
+    //    _IsCursorPositionValid = value;
+    //    RaisePropertyChanged();
+    //    }
     //    }
     //}
 
@@ -374,12 +370,12 @@ public sealed class WorkspaceController : BaseObject, IDisposable
 
     //public SelectionManager.SelectionMode _GetSelectionModeFromKeys(ModifierKeys mode)
     //{
-    //    return mode switch
-    //    {
-    //        ModifierKeys.Control => SelectionManager.SelectionMode.Toggle,
-    //        ModifierKeys.Shift => SelectionManager.SelectionMode.Add,
-    //        _ => SelectionManager.SelectionMode.Exclusive
-    //    };
+    //return mode switch
+    //{
+    //    ModifierKeys.Control => SelectionManager.SelectionMode.Toggle,
+    //    ModifierKeys.Shift => SelectionManager.SelectionMode.Add,
+    //    _ => SelectionManager.SelectionMode.Exclusive
+    //};
     //}
 
     ////--------------------------------------------------------------------------------------------------
@@ -390,212 +386,212 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     //    ModifierKeys modifierKeys
     //)
     //{
-    //    _LastMouseMovePosition = pos;
-    //    _LastMouseMoveViewportController = viewportController;
-    //    _LastModifierKeys = modifierKeys;
-    //    _MouseEventData.Clear();
+    //_LastMouseMovePosition = pos;
+    //_LastMouseMoveViewportController = viewportController;
+    //_LastModifierKeys = modifierKeys;
+    //_MouseEventData.Clear();
 
-    //    Selection.Update();
+    //Selection.Update();
 
-    //    if (pos.X < 0 || pos.Y < 0)
-    //    {
-    //        // Position is out of bounds, reset highlighting
-    //        Workspace.AISContext.MoveTo(
-    //            Int32.MinValue,
-    //            Int32.MinValue,
-    //            viewportController.Viewport.V3dView,
-    //            false
-    //        );
-    //        ;
-    //        Invalidate(true);
-    //        return;
-    //    }
+    //if (pos.X < 0 || pos.Y < 0)
+    //{
+    //// Position is out of bounds, reset highlighting
+    //Workspace.AISContext.MoveTo(
+    //    Int32.MinValue,
+    //    Int32.MinValue,
+    //    viewportController.Viewport.V3dView,
+    //    false
+    //);
+    //;
+    //Invalidate(true);
+    //return;
+    //}
 
-    //    var status = Workspace.AISContext.MoveTo(
+    //var status = Workspace.AISContext.MoveTo(
     //        Convert.ToInt32(pos.X),
     //        Convert.ToInt32(pos.Y),
     //        viewportController.Viewport.V3dView,
     //        false
     //    );
-    //    Invalidate(true);
+    //Invalidate(true);
 
-    //    if (status != AIS_StatusOfDetection.Error)
-    //    {
-    //        Pnt rawPoint;
-    //        if (
-    //            !viewportController.Viewport.ScreenToPoint(
-    //                Convert.ToInt32(pos.X),
-    //                Convert.ToInt32(pos.Y),
-    //                out rawPoint
-    //            )
-    //        )
-    //        {
-    //            IsMouseEventDataValid = false;
-    //            IsCursorPositionValid = false;
-    //            return;
-    //        }
+    //if (status != AIS_StatusOfDetection.Error)
+    //{
+    //Pnt rawPoint;
+    //if (
+    //    !viewportController.Viewport.ScreenToPoint(
+    //        Convert.ToInt32(pos.X),
+    //        Convert.ToInt32(pos.Y),
+    //        out rawPoint
+    //    )
+    //)
+    //{
+    //IsMouseEventDataValid = false;
+    //IsCursorPositionValid = false;
+    //return;
+    //}
 
-    //        Pnt planePoint;
-    //        if (
-    //            !viewportController.Viewport.ScreenToPoint(
-    //                Workspace.WorkingPlane,
-    //                Convert.ToInt32(pos.X),
-    //                Convert.ToInt32(pos.Y),
-    //                out planePoint
-    //            )
-    //        )
-    //        {
-    //            IsMouseEventDataValid = false;
-    //            IsCursorPositionValid = false;
-    //        }
+    //Pnt planePoint;
+    //if (
+    //    !viewportController.Viewport.ScreenToPoint(
+    //        Workspace.WorkingPlane,
+    //        Convert.ToInt32(pos.X),
+    //        Convert.ToInt32(pos.Y),
+    //        out planePoint
+    //    )
+    //)
+    //{
+    //IsMouseEventDataValid = false;
+    //IsCursorPositionValid = false;
+    //}
 
-    //        _LastDetectedInteractive = null;
-    //        _LastDetectedOwner = null;
-    //        InteractiveEntity detectedEntity = null;
-    //        TopoDS_Shape detectedShape = null;
-    //        if (Workspace.AISContext.HasDetected())
-    //        {
-    //            _LastDetectedInteractive = Workspace.AISContext.DetectedInteractive();
-    //            _LastDetectedOwner = Workspace.AISContext.DetectedOwner();
-    //            detectedShape = AisHelper.GetDetectedShapeFromContext(Workspace.AISContext);
-    //            detectedEntity = VisualObjects.GetEntity(_LastDetectedInteractive);
-    //        }
+    //_LastDetectedInteractive = null;
+    //_LastDetectedOwner = null;
+    //InteractiveEntity detectedEntity = null;
+    //TopoDS_Shape detectedShape = null;
+    //if (Workspace.AISContext.HasDetected())
+    //{
+    //_LastDetectedInteractive = Workspace.AISContext.DetectedInteractive();
+    //_LastDetectedOwner = Workspace.AISContext.DetectedOwner();
+    //detectedShape = AisHelper.GetDetectedShapeFromContext(Workspace.AISContext);
+    //detectedEntity = VisualObjects.GetEntity(_LastDetectedInteractive);
+    //}
 
-    //        _MouseEventData.Set(
-    //            viewportController.Viewport,
-    //            pos,
-    //            rawPoint,
-    //            planePoint,
-    //            detectedEntity,
-    //            _LastDetectedInteractive,
-    //            detectedShape,
-    //            modifierKeys
-    //        );
-    //        IsMouseEventDataValid = true;
+    //_MouseEventData.Set(
+    //    viewportController.Viewport,
+    //    pos,
+    //    rawPoint,
+    //    planePoint,
+    //    detectedEntity,
+    //    _LastDetectedInteractive,
+    //    detectedShape,
+    //    modifierKeys
+    //);
+    //IsMouseEventDataValid = true;
 
-    //        CursorPosition = planePoint;
-    //        CursorPosition2d = Workspace.WorkingPlane.Parameters(planePoint);
-    //        IsCursorPositionValid = true;
+    //CursorPosition = planePoint;
+    //CursorPosition2d = Workspace.WorkingPlane.Parameters(planePoint);
+    //IsCursorPositionValid = true;
 
-    //        foreach (var handler in EnumerateControls())
-    //        {
-    //            if (handler.OnMouseMove(_MouseEventData))
-    //                break;
-    //        }
+    //foreach (var handler in EnumerateControls())
+    //{
+    //if (handler.OnMouseMove(_MouseEventData))
+    //    break;
+    //}
 
-    //        if (_MouseEventData.ForceReDetection)
-    //        {
-    //            Workspace.AISContext.MoveTo(
-    //                Convert.ToInt32(pos.X),
-    //                Convert.ToInt32(pos.Y),
-    //                viewportController.Viewport.V3dView,
-    //                false
-    //            );
-    //        }
+    //if (_MouseEventData.ForceReDetection)
+    //{
+    //Workspace.AISContext.MoveTo(
+    //    Convert.ToInt32(pos.X),
+    //    Convert.ToInt32(pos.Y),
+    //    viewportController.Viewport.V3dView,
+    //    false
+    //);
+    //}
 
-    //        return;
-    //    }
+    //return;
+    //}
 
-    //    IsMouseEventDataValid = false;
-    //    IsCursorPositionValid = false;
+    //IsMouseEventDataValid = false;
+    //IsCursorPositionValid = false;
     //}
 
     ////--------------------------------------------------------------------------------------------------
 
     //public void MouseDown(ViewportController viewportController, ModifierKeys modifierKeys)
     //{
-    //    _LastModifierKeys = modifierKeys;
-    //    _MouseEventData.ModifierKeys = modifierKeys;
+    //_LastModifierKeys = modifierKeys;
+    //_MouseEventData.ModifierKeys = modifierKeys;
 
-    //    if (
-    //        _LastDetectedInteractive is AIS_ViewCube viewCube
-    //        && _LastDetectedOwner is AIS_ViewCubeOwner viewCubeOwner
-    //    )
-    //    {
-    //        if (!viewportController.LockedToPlane)
-    //        {
-    //            viewCube.HandleClick(viewCubeOwner);
-    //        }
-    //        return;
-    //    }
+    //if (
+    //    _LastDetectedInteractive is AIS_ViewCube viewCube
+    //    && _LastDetectedOwner is AIS_ViewCubeOwner viewCubeOwner
+    //)
+    //{
+    //if (!viewportController.LockedToPlane)
+    //{
+    //viewCube.HandleClick(viewCubeOwner);
+    //}
+    //return;
+    //}
 
-    //    bool handled = false;
-    //    foreach (var handler in EnumerateControls())
-    //    {
-    //        handled = handler.OnMouseDown(_MouseEventData);
-    //        if (handled)
-    //            break;
-    //    }
+    //bool handled = false;
+    //foreach (var handler in EnumerateControls())
+    //{
+    //handled = handler.OnMouseDown(_MouseEventData);
+    //if (handled)
+    //    break;
+    //}
 
-    //    if (_MouseEventData.ForceReDetection)
-    //    {
-    //        MouseMove(viewportController, _LastMouseMovePosition, modifierKeys);
-    //    }
+    //if (_MouseEventData.ForceReDetection)
+    //{
+    //MouseMove(viewportController, _LastMouseMovePosition, modifierKeys);
+    //}
 
-    //    if (handled)
-    //        return;
+    //if (handled)
+    //    return;
 
-    //    IsSelecting = true;
+    //IsSelecting = true;
     //}
 
     ////--------------------------------------------------------------------------------------------------
 
     //public void MouseUp(ViewportController viewportController, ModifierKeys modifierKeys)
     //{
-    //    _LastModifierKeys = modifierKeys;
-    //    _MouseEventData.ModifierKeys = modifierKeys;
+    //_LastModifierKeys = modifierKeys;
+    //_MouseEventData.ModifierKeys = modifierKeys;
 
-    //    if (
-    //        _LastDetectedInteractive is AIS_ViewCube viewCube
-    //        && _LastDetectedOwner is AIS_ViewCubeOwner viewCubeOwner
-    //    )
-    //    {
-    //        return;
-    //    }
+    //if (
+    //    _LastDetectedInteractive is AIS_ViewCube viewCube
+    //    && _LastDetectedOwner is AIS_ViewCubeOwner viewCubeOwner
+    //)
+    //{
+    //return;
+    //}
 
-    //    bool wasSelecting = IsSelecting;
-    //    IsSelecting = false;
+    //bool wasSelecting = IsSelecting;
+    //IsSelecting = false;
 
-    //    bool handled = false;
-    //    foreach (var handler in EnumerateControls())
-    //    {
-    //        handled = handler.OnMouseUp(_MouseEventData);
-    //        if (handled)
-    //            break;
-    //    }
+    //bool handled = false;
+    //foreach (var handler in EnumerateControls())
+    //{
+    //handled = handler.OnMouseUp(_MouseEventData);
+    //if (handled)
+    //    break;
+    //}
 
-    //    if (_MouseEventData.ForceReDetection)
-    //    {
-    //        MouseMove(viewportController, _LastMouseMovePosition, modifierKeys);
-    //    }
+    //if (_MouseEventData.ForceReDetection)
+    //{
+    //MouseMove(viewportController, _LastMouseMovePosition, modifierKeys);
+    //}
 
-    //    if (handled)
-    //        return;
+    //if (handled)
+    //    return;
 
-    //    if (wasSelecting)
-    //    {
-    //        if (_MouseEventData.DetectedEntities.Any())
-    //        {
-    //            // Shape selected
-    //            Selection.SelectEntities(
-    //                _MouseEventData.DetectedEntities,
-    //                _GetSelectionModeFromKeys(modifierKeys)
-    //            );
-    //            MouseMove(viewportController, _LastMouseMovePosition, modifierKeys);
-    //        }
-    //        else
-    //        {
-    //            // Empty click
-    //            if (
-    //                _GetSelectionModeFromKeys(modifierKeys)
-    //                == SelectionManager.SelectionMode.Exclusive
-    //            )
-    //            {
-    //                Selection.SelectEntity(null);
-    //                Invalidate();
-    //            }
-    //        }
-    //    }
+    //if (wasSelecting)
+    //{
+    //if (_MouseEventData.DetectedEntities.Any())
+    //{
+    //// Shape selected
+    //Selection.SelectEntities(
+    //    _MouseEventData.DetectedEntities,
+    //    _GetSelectionModeFromKeys(modifierKeys)
+    //);
+    //MouseMove(viewportController, _LastMouseMovePosition, modifierKeys);
+    //}
+    //else
+    //{
+    //// Empty click
+    //if (
+    //    _GetSelectionModeFromKeys(modifierKeys)
+    //    == SelectionManager.SelectionMode.Exclusive
+    //)
+    //{
+    //Selection.SelectEntity(null);
+    //Invalidate();
+    //}
+    //}
+    //}
     //}
 
     ////--------------------------------------------------------------------------------------------------
@@ -606,25 +602,25 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     //    ViewportController viewportController
     //)
     //{
-    //    if (
-    //        AisHelper.PickFromContext(
-    //            Workspace.AISContext,
-    //            corners[0],
-    //            corners[1],
-    //            corners[2],
-    //            corners[3],
-    //            includeTouched,
-    //            viewportController.Viewport.V3dView,
-    //            _MouseEventData.DetectedAisInteractives,
-    //            _MouseEventData.DetectedShapes
-    //        ) > 0
-    //    )
-    //    {
-    //        var entities = _MouseEventData
+    //if (
+    //    AisHelper.PickFromContext(
+    //        Workspace.AISContext,
+    //        corners[0],
+    //        corners[1],
+    //        corners[2],
+    //        corners[3],
+    //        includeTouched,
+    //        viewportController.Viewport.V3dView,
+    //        _MouseEventData.DetectedAisInteractives,
+    //        _MouseEventData.DetectedShapes
+    //    ) > 0
+    //)
+    //{
+    //var entities = _MouseEventData
     //            .DetectedAisInteractives.Select(VisualObjects.GetEntity)
     //            .Where(entity => entity != null);
-    //        _MouseEventData.DetectedEntities.AddRange(entities);
-    //    }
+    //_MouseEventData.DetectedEntities.AddRange(entities);
+    //}
     //}
 
     ////--------------------------------------------------------------------------------------------------
@@ -635,50 +631,50 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     //    ViewportController viewportController
     //)
     //{
-    //    _MouseEventData.DetectedAisInteractives.Clear();
-    //    _MouseEventData.DetectedEntities.Clear();
-    //    _MouseEventData.DetectedShapes.Clear();
+    //_MouseEventData.DetectedAisInteractives.Clear();
+    //_MouseEventData.DetectedEntities.Clear();
+    //_MouseEventData.DetectedShapes.Clear();
 
-    //    if (
-    //        AisHelper.PickFromContext(
-    //            Workspace.AISContext,
-    //            pointList,
-    //            includeTouched,
-    //            viewportController.Viewport.V3dView,
-    //            _MouseEventData.DetectedAisInteractives,
-    //            _MouseEventData.DetectedShapes
-    //        ) > 0
-    //    )
-    //    {
-    //        var entities = _MouseEventData
+    //if (
+    //    AisHelper.PickFromContext(
+    //        Workspace.AISContext,
+    //        pointList,
+    //        includeTouched,
+    //        viewportController.Viewport.V3dView,
+    //        _MouseEventData.DetectedAisInteractives,
+    //        _MouseEventData.DetectedShapes
+    //    ) > 0
+    //)
+    //{
+    //var entities = _MouseEventData
     //            .DetectedAisInteractives.Select(VisualObjects.GetEntity)
     //            .Where(entity => entity != null);
-    //        _MouseEventData.DetectedEntities.AddRange(entities);
-    //    }
+    //_MouseEventData.DetectedEntities.AddRange(entities);
+    //}
     //}
 
     ////--------------------------------------------------------------------------------------------------
 
     //public void CancelSelection()
     //{
-    //    IsSelecting = false;
+    //IsSelecting = false;
     //}
 
     ////--------------------------------------------------------------------------------------------------
 
     //public bool KeyPressed(Key key)
     //{
-    //    return EnumerateControls().Any(control => control.OnKeyPressed(key));
+    //return EnumerateControls().Any(control => control.OnKeyPressed(key));
     //}
 
     ////--------------------------------------------------------------------------------------------------
 
     //public void UpdateSelection()
     //{
-    //    if (_LastMouseMoveViewportController == null)
-    //        return;
-    //    Selection.Update();
-    //    MouseMove(_LastMouseMoveViewportController, _LastMouseMovePosition, _LastModifierKeys);
+    //if (_LastMouseMoveViewportController == null)
+    //    return;
+    //Selection.Update();
+    //MouseMove(_LastMouseMoveViewportController, _LastMouseMovePosition, _LastModifierKeys);
     //}
 
     ////--------------------------------------------------------------------------------------------------
@@ -856,50 +852,50 @@ public sealed class WorkspaceController : BaseObject, IDisposable
 
     //#endregion
 
-    ////#region Selection Change
+    //#region Selection Change
 
-    ////void _Selection_SelectionChanging(
-    ////    SelectionManager selectionManager,
-    ////    SelectionManager.SelectionChangingCancelEventArgs eventArgs
-    ////)
-    ////{
-    ////    if (
-    ////        EnumerateControls()
-    ////            .Any(child =>
-    ////                child.OnEntitySelectionChanging(
-    ////                    eventArgs.EntitiesToSelect,
-    ////                    eventArgs.EntitiesToUnSelect
-    ////                )
-    ////            )
-    ////    )
-    ////    {
-    ////        eventArgs.Cancel = true;
-    ////    }
-    ////}
+    //void _Selection_SelectionChanging(
+    //    SelectionManager selectionManager,
+    //    SelectionManager.SelectionChangingCancelEventArgs eventArgs
+    //)
+    //{
+    //    if (
+    //        EnumerateControls()
+    //            .Any(child =>
+    //                child.OnEntitySelectionChanging(
+    //                    eventArgs.EntitiesToSelect,
+    //                    eventArgs.EntitiesToUnSelect
+    //                )
+    //            )
+    //    )
+    //    {
+    //        eventArgs.Cancel = true;
+    //    }
+    //}
 
-    //////--------------------------------------------------------------------------------------------------
+    ////--------------------------------------------------------------------------------------------------
 
-    ////void _Selection_SelectionChanged(SelectionManager selectionManager)
-    ////{
-    ////    if (VisualObjects.EntityIsolationEnabled)
-    ////    {
-    ////        if (
-    ////            VisualObjects
-    ////                .GetIsolatedEntities()
-    ////                .SymmetricExcept(selectionManager.SelectedEntities)
-    ////                .Any()
-    ////        )
-    ////        {
-    ////            VisualObjects.SetIsolatedEntities(null);
-    ////        }
-    ////    }
+    //void _Selection_SelectionChanged(SelectionManager selectionManager)
+    //{
+    //    if (VisualObjects.EntityIsolationEnabled)
+    //    {
+    //        if (
+    //            VisualObjects
+    //                .GetIsolatedEntities()
+    //                .SymmetricExcept(selectionManager.SelectedEntities)
+    //                .Any()
+    //        )
+    //        {
+    //            VisualObjects.SetIsolatedEntities(null);
+    //        }
+    //    }
 
-    ////    UpdateEditor();
-    ////}
+    //    UpdateEditor();
+    //}
 
-    //////--------------------------------------------------------------------------------------------------
+    ////--------------------------------------------------------------------------------------------------
 
-    ////#endregion
+    //#endregion
 
     #region Redraw and Invalidate
 
@@ -924,7 +920,9 @@ public sealed class WorkspaceController : BaseObject, IDisposable
     }
 
     //--------------------------------------------------------------------------------------------------
-
+    /// <summary>
+    /// 重绘
+    /// </summary>
     void _Redraw()
     {
         //_UpdateGrid();

@@ -22,7 +22,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDC.Common", "Common\RDC.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDC.Interaction", "Interaction\RDC.Interaction.csproj", "{672D1B93-3145-4FB1-9CD6-EB84FC25BE6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDC.Core", "Core\RDC.Core.csproj", "{9EBDD41B-B973-432D-A469-2A40B8EBB35E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RDC.Core", "Core\RDC.Core.csproj", "{9EBDD41B-B973-432D-A469-2A40B8EBB35E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{B7228E5A-712B-4996-AB70-100CB4D98578}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
